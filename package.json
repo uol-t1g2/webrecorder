@@ -1,11 +1,11 @@
 {
-  "name": "chrome-extension-boilerplate-react",
-  "version": "4.4.0",
-  "description": "A chrome extension boilerplate built with React 17, Webpack 5, and Webpack Dev Server 4",
+  "name": "webrecorder",
+  "version": "0.0.1",
+  "description": "Web recorder",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lxieyang/chrome-extension-boilerplate-react.git"
+    "url": "git@github.com:uol-t1g2/webrecorder.git"
   },
   "scripts": {
     "build": "node utils/build.js",
