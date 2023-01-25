@@ -28,9 +28,9 @@ const Popup = () => {
         </form>
       </div>
       <div className="Button-area">
-        <button class="Button-style Button-record" type="button"><i class="fa-solid fa-circle-dot"></i> Record</button>
-        <button class="Button-style Button-start" type="button"><i class="fa-solid fa-circle-play"></i> Play</button>
-        <button class="Button-style Button-stop" type="button"><i class="fa-solid fa-circle-stop"></i> Stop</button>
+        <button className="Button-style Button-record" type="button"><i className="fa-solid fa-circle-dot"></i> Record</button>
+        <button className="Button-style Button-start" type="button"><i className="fa-solid fa-circle-play"></i> Play</button>
+        <button className="Button-style Button-stop" type="button"><i className="fa-solid fa-circle-stop"></i> Stop</button>
       </div>
     </div>
   );
