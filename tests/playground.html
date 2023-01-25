@@ -1,0 +1,24 @@
+<html>
+
+<head>
+    <title>Button Counter</title>
+</head>
+
+<body>
+    <h1>Button Counter</h1>
+    <button id="counter-button">Click me!</button>
+    <p id="counter-display">0</p>
+
+    <script>
+        let counter = 0;
+        let button = document.getElementById("counter-button");
+        let display = document.getElementById("counter-display");
+
+        button.addEventListener("click", function () {
+            counter++;
+            display.innerHTML = counter;
+        });
+    </script>
+</body>
+
+</html>
