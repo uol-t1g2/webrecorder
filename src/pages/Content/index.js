@@ -1,4 +1,4 @@
-document.body.style.backgroundColor = 'red';
+// document.body.style.backgroundColor = 'red';
 console.log('Testing content script sending a message to popup');
 
 chrome.runtime.sendMessage({
