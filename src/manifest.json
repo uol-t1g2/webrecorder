@@ -24,9 +24,7 @@
         "contentScript.bundle.js"
       ],
       "css": [
-        "content.styles.css",
-        "css/fontawesome.min.css",
-        "css/solid.min.css"
+        "content.styles.css"
       ]
     }
   ],
@@ -35,10 +33,7 @@
       "resources": [
         "content.styles.css",
         "icon-128.png",
-        "icon-34.png",
-        "css/fontawesome.min.css",
-        "css/solid.min.css",
-        "webfonts/*"
+        "icon-34.png"
       ],
       "matches": []
     }
