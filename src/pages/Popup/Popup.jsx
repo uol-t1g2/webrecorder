@@ -7,28 +7,23 @@ import '../../assets/fontawesome/css/solid.min.css';
 
 const Popup = () => {
   // Button logic
+  const playButton = <button className={`Button-style Button-play`} onClick={playHandler} id="playButton" type="button"><i className='fa-solid fa-circle-play'></i> Play</button>;
+  const recordButton = <button className={`Button-style Button-record`} onClick={recordHandler} id="recordButton" type="button"><i className='fa-solid fa-circle-dot'></i> Record</button>;
+  const stoppedPlayButton = <button className={`Button-style Button-stop`} onClick={playHandler} id="playButton" type="button"><i className='fa-solid fa-stop'></i> Playing</button>;
+  const stoppedRecordButton = <button className={`Button-style Button-stop`} onClick={recordHandler} id="recordButton" type="button"><i className='fa-solid fa-circle-stop'></i> Stop</button>;
+
   const [buttonRecordActive, setButtonRecordActive] = useState(false);
   const [buttonPlayActive, setButtonPlayActive] = useState(false);
-  const [recordText, setRecordText] = React.useState("Record");
-  const [recordIconClass, setRecordIconClass] = React.useState("fa-solid fa-circle-dot");
-  const [playText, setPlayText] = React.useState("Play");
-  const [playIconClass, setPlayIconClass] = React.useState("fa-solid fa-circle-play");
-  const buttonRecordClass = (buttonRecordActive) ? 'Button-stop' : 'Button-record';
-  const buttonPlayClass = (buttonPlayActive) ? 'Button-stop' : 'Button-play';
+
 
   function recordHandler() {
     if (buttonRecordActive) {
-      setRecordText("Record");
-      setRecordIconClass("fa-solid fa-circle-dot");
       setButtonRecordActive(false);
     }
     else {
       if (buttonPlayActive) {
-        const element = document.querySelector('#playButton') || null;
-        if (element) element.click();
+        setButtonPlayActive(false);
       }
-      setRecordText("Stop");
-      setRecordIconClass("fa-solid fa-circle-stop");
       setButtonRecordActive(true);
     }
   }
@@ -36,20 +31,14 @@ const Popup = () => {
   function playHandler() {
     if (buttonPlayActive) {
       setButtonPlayActive(false);
-      setPlayText("Play");
-      setPlayIconClass("fa-solid fa-circle-play");
     }
     else {
       if (buttonRecordActive) {
-        const element = document.querySelector('#recordButton') || null;
-        if (element) element.click();
+        setButtonRecordActive(false);
       }
       setButtonPlayActive(true);
-      setPlayText("Playing");
-      setPlayIconClass("fa-solid fa-stop");
     }
   }
-
 
   useEffect(() => {
     // Listen for messages from the popup.
@@ -59,9 +48,6 @@ const Popup = () => {
     });
 
   }, []);
-
-
-
 
   return (
     <div className="App">
@@ -77,8 +63,10 @@ const Popup = () => {
         </form>
       </div>
       <div className="Button-area">
-        <button className={`Button-style ${buttonRecordClass}`} onClick={recordHandler} id="recordButton" type="button"><i className={recordIconClass}></i> {recordText}</button>
-        <button className={`Button-style ${buttonPlayClass}`} onClick={playHandler} id="playButton" type="button"><i className={playIconClass}></i> {playText}</button>
+        {buttonRecordActive || recordButton}
+        {buttonRecordActive && stoppedRecordButton}
+        {buttonPlayActive || playButton}
+        {buttonPlayActive && stoppedPlayButton}
       </div>
     </div>
   );
