@@ -9,8 +9,8 @@ const Popup = () => {
   // Button logic
   const playButton = <button className={`Button-style Button-play`} onClick={playHandler} id="playButton" type="button"><i className='fa-solid fa-circle-play'></i> Play</button>;
   const recordButton = <button className={`Button-style Button-record`} onClick={recordHandler} id="recordButton" type="button"><i className='fa-solid fa-circle-dot'></i> Record</button>;
-  const stoppedPlayButton = <button className={`Button-style Button-stop`} onClick={playHandler} id="playButton" type="button"><i className='fa-solid fa-stop'></i> Playing</button>;
-  const stoppedRecordButton = <button className={`Button-style Button-stop`} onClick={recordHandler} id="recordButton" type="button"><i className='fa-solid fa-circle-stop'></i> Stop</button>;
+  const stopPlayButton = <button className={`Button-style Button-stop`} onClick={playHandler} id="playButton" type="button"><i className='fa-solid fa-stop'></i> Playing</button>;
+  const stopRecordButton = <button className={`Button-style Button-stop`} onClick={recordHandler} id="recordButton" type="button"><i className='fa-solid fa-circle-stop'></i> Stop</button>;
 
   const [buttonRecordActive, setButtonRecordActive] = useState(false);
   const [buttonPlayActive, setButtonPlayActive] = useState(false);
@@ -64,9 +64,9 @@ const Popup = () => {
       </div>
       <div className="Button-area">
         {buttonRecordActive || recordButton}
-        {buttonRecordActive && stoppedRecordButton}
+        {buttonRecordActive && stopRecordButton}
         {buttonPlayActive || playButton}
-        {buttonPlayActive && stoppedPlayButton}
+        {buttonPlayActive && stopPlayButton}
       </div>
     </div>
   );
