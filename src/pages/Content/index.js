@@ -1,12 +1,21 @@
 
-var recordedEvents = [];
+var recordedEvents = []; // store events
+var clipboard = []; // store user copied text
 
 // ---------------------------------------------------
 // ATTACH GLOBAL EVENT LISTENER
 // ---------------------------------------------------
 
 function attachGlobalEventListeners() {
-  console.log('started listening -> attachGlobalEventListeners::Content/index.js');
+  ```
+  a function that listens for 4 events:
+    - click (left mouse)
+    - contextmenu (right mouse)
+    - keydown events
+        >> handles multi-button presses (key + Ctrl + Alt + Shift)
+        >> handles copiying text to global clipboard
+    - URL change
+  ```
 
   // left click listener
   // ---------------------------------------------------
@@ -40,18 +49,35 @@ function attachGlobalEventListeners() {
       '\nlast record:', recordedEvents[recordedEvents.length - 1]
     );
 
+
   });
 
   // keydown listener
   // ---------------------------------------------------
   document.body.addEventListener('keydown', function (e) {
 
+    // non-functional when standalone keys
     if (e.key === 'Shift' || e.key === 'Control' || e.key === 'Alt') {
-      // awaiting follow up key
-      // handled by the else close below*      
+      // awaiting follow up key which is handled by the else close*      
     }
+
+    // Cntrl + c is pressed after a selection (of text) was made
+    else if (e.code === 'KeyC' && e.ctrlKey === true && window.getSelection().getRangeAt(0).cloneContents().textContent !== '') {
+
+      // store copied text in the clipboard
+      clipboard.push(
+        window.getSelection().getRangeAt(0).cloneContents().textContent
+      );
+
+      // test wheter the selection was recorded accuratley
+      console.log("copied to clipboard:", clipboard[clipboard.length - 1]);
+
+    }
+
+    // all other keys
     else {
-      // listen to keys
+
+      // store event
       recordedEvents.push({
         type: 'keydown',
         key: e.key,
@@ -74,6 +100,7 @@ function attachGlobalEventListeners() {
   // URL change listener
   // ---------------------------------------------------
   window.addEventListener('hashchange', function (e) {
+    // store event
     recordedEvents.push({
       type: 'hashchange',
       newURL: e.newURL,
@@ -87,9 +114,9 @@ function attachGlobalEventListeners() {
       '\nlast record:', recordedEvents[recordedEvents.length - 1]
     );
   });
-
 }
 
+// temporary call location - must be associated to a "record" state only
 attachGlobalEventListeners();
 
 
@@ -102,6 +129,10 @@ chrome.runtime.sendMessage({
   from: 'content',
   subject: 'helloFromPage',
 });
+
+//////////////////////////////////////////////////////////
+// PLEASE NOTE - THIS FUNCTION IS NOT CALLED ANYWHERE YET!
+//////////////////////////////////////////////////////////
 
 // Create a click function for the content page task
 // The function receives a selector and triggers the click event on it.
