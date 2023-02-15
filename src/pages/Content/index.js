@@ -7,7 +7,7 @@ var clipboard = []; // store user copied text
 // ---------------------------------------------------
 
 function attachGlobalEventListeners() {
-  ```
+  /*
   a function that listens for 4 events:
     - click (left mouse)
     - contextmenu (right mouse)
@@ -15,7 +15,7 @@ function attachGlobalEventListeners() {
         >> handles multi-button presses (key + Ctrl + Alt + Shift)
         >> handles copiying text to global clipboard
     - URL change
-  ```
+  */
 
   // left click listener
   // ---------------------------------------------------
