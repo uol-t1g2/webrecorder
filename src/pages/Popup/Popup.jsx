@@ -17,27 +17,16 @@ const Popup = () => {
 
 
   function recordHandler() {
-    if (buttonRecordActive) {
-      setButtonRecordActive(false);
-    }
-    else {
-      if (buttonPlayActive) {
-        setButtonPlayActive(false);
-      }
-      setButtonRecordActive(true);
-    }
+    if (buttonPlayActive) setButtonPlayActive(false);
+    let prev = buttonRecordActive;
+    setButtonRecordActive((prev) = !prev);
   }
 
+
   function playHandler() {
-    if (buttonPlayActive) {
-      setButtonPlayActive(false);
-    }
-    else {
-      if (buttonRecordActive) {
-        setButtonRecordActive(false);
-      }
-      setButtonPlayActive(true);
-    }
+    if (buttonRecordActive) setButtonRecordActive(false);
+    let prev = buttonPlayActive;
+    setButtonPlayActive((prev) = !prev);
   }
 
   useEffect(() => {
@@ -63,10 +52,8 @@ const Popup = () => {
         </form>
       </div>
       <div className="Button-area">
-        {buttonRecordActive || recordButton}
-        {buttonRecordActive && stopRecordButton}
-        {buttonPlayActive || playButton}
-        {buttonPlayActive && stopPlayButton}
+        {buttonRecordActive ? stopRecordButton : recordButton}
+        {buttonPlayActive ? stopPlayButton : playButton}
       </div>
     </div>
   );

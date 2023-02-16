@@ -70,27 +70,27 @@ textarea {
 
 .Button-play {
   box-shadow: inset -2px -2px 5px rgba(80, 19, 65, 0.3), inset 2px 2px 5px rgba(235, 190, 217, 0.3);
-  background-image: linear-gradient(135deg, #4085f3 40%, #4dfcd3);
+  background-image: linear-gradient(135deg, rgb(64, 133, 243) 40%, rgb(79, 252, 212));
 }
 
 .Button-play:hover {
-  background-image: linear-gradient(-135deg, #4085f3 40%, #4dfcd3);
+  background-image: linear-gradient(135deg, rgb(61, 128, 236) 40%, rgb(88, 240, 204));
 }
 
 .Button-stop {
-  box-shadow: inset 2px 2px 3px rgba(179, 44, 47, 0.8), inset -2px -2px 3px rgba(166, 89, 47, 0.8);
-  background-image: linear-gradient(135deg, rgb(243, 64, 67) 40%, rgb(252, 137, 77));
+  box-shadow: inset 2px 2px 3px rgba(100, 0, 0, 0.8), inset -2px -2px 3px rgba(100, 0, 0, 0.8);
+  background-image: linear-gradient(135deg, rgb(110, 0, 0) 30%, rgb(190, 9, 0));
 }
 
 .Button-stop:hover {
-  background-image: linear-gradient(-135deg, #f34043 40%, #fc894d);
+  background-image: linear-gradient(135deg, rgb(142, 0, 0) 30%, rgb(223, 9, 0));
 }
 
 .Button-record {
   box-shadow: inset -2px -2px 5px rgba(80, 19, 65, 0.3), inset 2px 2px 5px rgba(235, 190, 217, 0.3);
-  background-image: linear-gradient(135deg, #dc57e6 40%, #4dfced);
+  background-image: linear-gradient(135deg, rgb(220, 87, 230) 40%, rgb(77, 252, 237));
 }
 
 .Button-record:hover {
-  background-image: linear-gradient(-135deg, #dc57e6 40%, #4dfced);
+  background-image: linear-gradient(135deg, rgb(229, 59, 229) 30%, rgb(51, 241, 225));
 }
