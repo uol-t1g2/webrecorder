@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../../assets/img/logo_light.svg';
 import Greetings from '../../containers/Greetings/Greetings';
 import './Popup.css';
@@ -12,6 +12,29 @@ function sendMessage(message) {
 }
 
 const Popup = () => {
+  // Button logic
+  const playButton = <button className={`Button-style Button-play`} onClick={playHandler} id="playButton" type="button"><i className='fa-solid fa-circle-play'></i> Play</button>;
+  const recordButton = <button className={`Button-style Button-record`} onClick={recordHandler} id="recordButton" type="button"><i className='fa-solid fa-circle-dot'></i> Record</button>;
+  const stopPlayButton = <button className={`Button-style Button-stop`} onClick={playHandler} id="playButton" type="button"><i className='fa-solid fa-stop'></i> Playing</button>;
+  const stopRecordButton = <button className={`Button-style Button-stop`} onClick={recordHandler} id="recordButton" type="button"><i className='fa-solid fa-circle-stop'></i> Stop</button>;
+
+  const [buttonRecordActive, setButtonRecordActive] = useState(false);
+  const [buttonPlayActive, setButtonPlayActive] = useState(false);
+
+
+  function recordHandler() {
+    if (buttonPlayActive) setButtonPlayActive(false);
+    let prev = buttonRecordActive;
+    setButtonRecordActive((prev) = !prev);
+  }
+
+
+  function playHandler() {
+    if (buttonRecordActive) setButtonRecordActive(false);
+    let prev = buttonPlayActive;
+    setButtonPlayActive((prev) = !prev);
+  }
+
   useEffect(() => {
     // Listen for messages from the popup.
     chrome.runtime.onMessage.addListener((msgObj) => {
@@ -20,47 +43,6 @@ const Popup = () => {
       return true;
     });
 
-    // Button logic to switch on click events
-    document.getElementById('recordButton').addEventListener('click', recClick);
-    document.getElementById('playButton').addEventListener('click', playClick);
-
-    function recClick() {
-      const elRec = document.getElementById('recordButton');
-      const elPlay = document.getElementById('playButton');
-      if (elRec.classList.contains('Button-record')) {
-        if (elPlay.classList.contains('Button-stop')) {
-          elPlay.classList.remove('Button-stop');
-          elPlay.classList.add('Button-play');
-          elPlay.innerHTML = "<i class='fa-solid fa-circle-play'></i> Play";
-        }
-        elRec.classList.remove('Button-record');
-        elRec.classList.add('Button-stop');
-        elRec.innerHTML = "<i class='fa-solid fa-circle-dot'></i> Stop";
-      } else {
-        elRec.classList.remove('Button-stop');
-        elRec.classList.add('Button-record');
-        elRec.innerHTML = "<i class='fa-solid fa-circle-dot'></i> Record";
-      }
-    }
-
-    function playClick() {
-      const elPlay = document.getElementById('playButton');
-      const elRec = document.getElementById('recordButton');
-      if (elPlay.classList.contains('Button-play')) {
-        if (elRec.classList.contains('Button-stop')) {
-          elRec.classList.remove('Button-stop');
-          elRec.classList.add('Button-record');
-          elRec.innerHTML = "<i class='fa-solid fa-circle-dot'></i> Record";
-        }
-        elPlay.classList.remove('Button-play');
-        elPlay.classList.add('Button-stop');
-        elPlay.innerHTML = "<i class='fa-solid fa-circle-stop'></i> Stop";
-      } else {
-        elPlay.classList.remove('Button-stop');
-        elPlay.classList.add('Button-play');
-        elPlay.innerHTML = "<i class='fa-solid fa-circle-play'></i> Play";
-      }
-    }
   }, []);
 
   return (
@@ -75,20 +57,8 @@ const Popup = () => {
         </form>
       </div>
       <div className="Button-area">
-        <button
-          className="Button-style Button-record"
-          id="recordButton"
-          type="button"
-        >
-          <i className="fa-solid fa-circle-dot"></i> Record
-        </button>
-        <button
-          className="Button-style Button-play"
-          id="playButton"
-          type="button"
-        >
-          <i className="fa-solid fa-circle-play"></i> Play
-        </button>
+        {buttonRecordActive ? stopRecordButton : recordButton}
+        {buttonPlayActive ? stopPlayButton : playButton}
       </div>
     </div>
   );
