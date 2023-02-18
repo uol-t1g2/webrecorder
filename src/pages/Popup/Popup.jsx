@@ -7,42 +7,82 @@ import '../../assets/fontawesome/css/solid.min.css';
 
 function sendMessage(message) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, { message });
+    chrome.tabs.sendMessage(tabs[0].id, message);
   });
 }
 
 const Popup = () => {
   // Button logic
-  const playButton = <button className={`Button-style Button-play`} onClick={playHandler} id="playButton" type="button"><i className='fa-solid fa-circle-play'></i> Play</button>;
-  const recordButton = <button className={`Button-style Button-record`} onClick={recordHandler} id="recordButton" type="button"><i className='fa-solid fa-circle-dot'></i> Record</button>;
-  const stopPlayButton = <button className={`Button-style Button-stop`} onClick={playHandler} id="playButton" type="button"><i className='fa-solid fa-stop'></i> Playing</button>;
-  const stopRecordButton = <button className={`Button-style Button-stop`} onClick={recordHandler} id="recordButton" type="button"><i className='fa-solid fa-circle-stop'></i> Stop</button>;
+  const playButton = (
+    <button
+      className={`Button-style Button-play`}
+      onClick={playHandler}
+      id="playButton"
+      type="button"
+    >
+      <i className="fa-solid fa-circle-play"></i> Play
+    </button>
+  );
+  const recordButton = (
+    <button
+      className={`Button-style Button-record`}
+      onClick={recordHandler}
+      id="recordButton"
+      type="button"
+    >
+      <i className="fa-solid fa-circle-dot"></i> Record
+    </button>
+  );
+  const stopPlayButton = (
+    <button
+      className={`Button-style Button-stop`}
+      onClick={playHandler}
+      id="playButton"
+      type="button"
+    >
+      <i className="fa-solid fa-stop"></i> Playing
+    </button>
+  );
+  const stopRecordButton = (
+    <button
+      className={`Button-style Button-stop`}
+      onClick={recordHandler}
+      id="recordButton"
+      type="button"
+    >
+      <i className="fa-solid fa-circle-stop"></i> Stop
+    </button>
+  );
 
   const [buttonRecordActive, setButtonRecordActive] = useState(false);
   const [buttonPlayActive, setButtonPlayActive] = useState(false);
 
-
   function recordHandler() {
     if (buttonPlayActive) setButtonPlayActive(false);
     let prev = buttonRecordActive;
-    setButtonRecordActive((prev) = !prev);
+    setButtonRecordActive((prev = !prev));
+    sendMessage({
+      action: 'startRecording',
+      value: 'I want to record events now!',
+    });
   }
-
 
   function playHandler() {
     if (buttonRecordActive) setButtonRecordActive(false);
     let prev = buttonPlayActive;
-    setButtonPlayActive((prev) = !prev);
+    setButtonPlayActive((prev = !prev));
+    sendMessage({
+      action: 'startPlaying',
+      value: 'I want to play events now!',
+    });
   }
 
   useEffect(() => {
     // Listen for messages from the popup.
     chrome.runtime.onMessage.addListener((msgObj) => {
       console.debug('Got a message from the page', msgObj);
-      sendMessage({ data: 'Hi from popup!' });
       return true;
     });
-
   }, []);
 
   return (
