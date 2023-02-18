@@ -2,34 +2,12 @@
 
 <head>
     <title>Button Counter</title>
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
 </head>
 
 <body>
-    <!-- button test 1 -->
     <h1>Button Counter</h1>
     <button id="counter-button">Click me!</button>
     <p id="counter-display">0</p>
-    <!-- button test 2 -->
-    <h1>Other Test Buttons</h1>
-    <div class="test-buttons" style="margin-left:16px;margin-right:16px">
-
-        <div id="popup-text-button">
-          <button id="visible">HTML Elements</button>
-          <p id="invisible" class="hide">
-            An HTML element is the collection of start and end tags with the content inserted in between them.
-          </p>
-        </div>
-        
-        <div id="color-change-button">
-          <button id="color-change">Browser Support</button>
-        </div>
-
-        <div id="highlight-change-button">
-          <button id="highlight-change">Global Attributes</button >
-        </div>
-    </div>
 
     <script>
         let counter = 0;
@@ -41,25 +19,6 @@
             display.innerHTML = counter;
         });
     </script>
-
-    <script>
-    $(function() {
-        $("#visible").click(function() {
-            $('#invisible').toggleClass("show");
-        });  
-        $("#color-change").click(function() {
-            $('#color-change').css("color", "red" );
-        }); 
-        $("#highlight-change").click(function() {
-            $('#highlight-change').addClass( "highlight" );
-        }); 
-    });
-    </script>
-    <style>
-        .hide{display:none;}
-        .show{display:block;}
-        .highlight{background-color:yellow;}
-    </style>
 </body>
 
 </html>
