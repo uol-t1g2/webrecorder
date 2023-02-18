@@ -14,12 +14,3 @@ function click(selector) {
   if (element) element.click();
 }
 
-// Create a detachGlobalEventListeners function.
-// The function detached the global event listener and console.log the recordedEvents array from the attachGlobalEventListeners.
-function detachGlobalEventListeners(){
-  const body = document.querySelector("body");
-  const recordedEvents = attachGlobalEventListeners();
-  body.removeEventListener("click", function(events) {
-    console.log(recordedEvents)
-  });
-}
