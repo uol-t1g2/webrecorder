@@ -13,4 +13,9 @@ function click(selector) {
   const element = document.querySelector(selector) || null;
   if (element) element.click();
 }
-
+// The function plays a recording when needed
+function playRecording(recordedEvents) {
+  recordedEvents.forEach(element => {
+    document.querySelector(element.selector).eval(element.type)();
+  });
+}
