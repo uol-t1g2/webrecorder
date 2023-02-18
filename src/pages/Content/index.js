@@ -19,3 +19,11 @@ function playRecording(recordedEvents) {
     document.querySelector(element.selector).eval(element.type)();
   });
 }
+// Create a detachGlobalEventListeners function.
+// The function detached the global event listener and console.log the recordedEvents array from the attachGlobalEventListeners.
+function detachGlobalEventListeners(){
+  const body = document.querySelector("body");
+  body.removeEventListener("click", function(events) {
+    console.log(recordedEvents);
+  });
+}
