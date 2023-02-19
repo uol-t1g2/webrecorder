@@ -9,6 +9,10 @@ chrome.runtime.onMessage.addListener(function (msgObj) {
       break;
     case 'startPlaying':
       console.log('Should start playing recording...');
+      /* playRecording is only called here for demonstration. 
+      It should be removed when required actions are implemented.
+      Example: click on the play button on popup window to increment the playground.htm Button counter */
+      playRecording(["#counter-button"]);
       sendMessage({ action: 'test', value: 'Hi from content (player)!' });
       break;
     default:
@@ -24,13 +28,12 @@ function sendMessage(message) {
 // The function receives a selector and triggers the click event on it.
 function click(selector) {
   const element = document.querySelector(selector) || null;
+  console.log("click event triggering for " + element);
   if (element) element.click();
 }
 // The function plays a recording when needed
 function playRecording(recordedEvents) {
   recordedEvents.forEach(element => {
-    if(element.type == "click") {
-      document.querySelector(element.selector).click();
-    }
+    click(element);
   });
 }
