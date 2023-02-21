@@ -1,4 +1,4 @@
-// Global event array
+// Global recorded events array
 var recordedEvents = [];
 
 // Our global event receiver from Popup
