@@ -1,3 +1,6 @@
+// import object selector to easily fetch DOM elements
+import { finder } from '@medv/finder'
+
 // Global recorded events array
 var recordedEvents = [];
 
@@ -29,3 +32,28 @@ function click(selector) {
   const element = document.querySelector(selector) || null;
   if (element) element.click();
 }
+
+// a function that listens to click events and stores them in the recordedEvents array
+function attachGlobalEventListeners() {
+
+  // capture all click events
+  document.body.addEventListener('click', function (e) {
+
+    // find the best selector for click target (id/class/tag/attr)
+    const selector = finder(e.target);
+
+    // store selector in recordedEvents
+    recordedEvents.push({
+      type: 'click',
+      element: selector,
+      time: new Date().getTime()
+    });
+
+    // test wether the event was added
+    console.debug(
+      'array length:', recordedEvents.length,
+      '\nlast record:', recordedEvents[recordedEvents.length - 1]
+    );
+  });
+}
+
