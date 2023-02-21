@@ -1,3 +1,6 @@
+// Global event array
+var recordedEvents = [];
+
 // Our global event receiver from Popup
 chrome.runtime.onMessage.addListener(function (msgObj) {
   console.debug('Got a message from Popup,', msgObj);
