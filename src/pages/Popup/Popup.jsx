@@ -54,8 +54,9 @@ const Popup = () => {
     </button>
   );
 
+  let playState = chrome.storage.session.get('playActive');
   const [buttonRecordActive, setButtonRecordActive] = useState(false);
-  const [buttonPlayActive, setButtonPlayActive] = useState(false);
+  const [buttonPlayActive, setButtonPlayActive] = useState(playState);
 
   function recordHandler() {
     if (buttonPlayActive) setButtonPlayActive(false);
@@ -70,6 +71,7 @@ const Popup = () => {
   function playHandler() {
     if (buttonRecordActive) setButtonRecordActive(false);
     let prev = buttonPlayActive;
+    chrome.storage.session.get({ playActive: buttonPlayActive });
     setButtonPlayActive((prev = !prev));
     sendMessage({
       action: 'startPlaying',
