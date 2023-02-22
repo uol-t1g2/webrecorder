@@ -10,7 +10,7 @@ function sendMessage(message) {
     chrome.tabs.sendMessage(tabs[0].id, message);
   });
 }
-let playState = chrome.storage.local.get(["playActive"]).playActive;
+
 const Popup = () => {
   // Button logic
   const playButton = (
@@ -54,31 +54,25 @@ const Popup = () => {
     </button>
   );
 
-
   const [buttonRecordActive, setButtonRecordActive] = useState(false);
-  const [buttonPlayActive, setButtonPlayActive] = useState(playState);
+  const [buttonPlayActive, setButtonPlayActive] = useState(false);
 
   function recordHandler() {
-    if (buttonPlayActive) setButtonPlayActive(false);
-    let prev = buttonRecordActive;
-    setButtonRecordActive((prev = !prev));
+    if (buttonPlayActive) playHandler();
+    const newButtonState = !buttonRecordActive;
+    setButtonRecordActive(newButtonState);
+    chrome.storage.session.set({ recordState: newButtonState });
     sendMessage({
       action: 'startRecording',
       value: 'I want to record events now!',
     });
   }
 
-  async function playHandler() {
-    if (buttonRecordActive) setButtonRecordActive(false);
-    let prev = await chrome.storage.local.get(["playActive"]).then((result) => {
-      console.log("Value currently is " + result.playActive);
-      return result.playActive;
-    });
-
-    await chrome.storage.local.set({ playActive: !prev }).then(() => {
-      console.log("Value is set to " + !prev);
-      setButtonPlayActive(!prev);
-    });
+  function playHandler() {
+    if (buttonRecordActive) recordHandler();
+    const newButtonState = !buttonPlayActive;
+    setButtonPlayActive(newButtonState);
+    chrome.storage.session.set({ playState: newButtonState });
     sendMessage({
       action: 'startPlaying',
       value: 'I want to play events now!',
@@ -91,6 +85,17 @@ const Popup = () => {
       console.debug('Got a message from the page', msgObj);
       return true;
     });
+
+    // Maintain the Play and Record button states on popup GUI
+    chrome.storage.session.get(["recordState"], (result) => {
+      const recordButtonState = result.recordState;
+      if (recordButtonState != undefined) setButtonRecordActive(recordButtonState);
+    });
+    chrome.storage.session.get(["playState"], (result) => {
+      const playButtonState = result.playState;
+      if (playButtonState != undefined) setButtonPlayActive(playButtonState);
+    });
+
   }, []);
 
   return (
