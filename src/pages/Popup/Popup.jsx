@@ -54,9 +54,9 @@ const Popup = () => {
     </button>
   );
 
-  let playState = chrome.storage.session.get('playActive');
+
   const [buttonRecordActive, setButtonRecordActive] = useState(false);
-  const [buttonPlayActive, setButtonPlayActive] = useState(playState);
+  const [buttonPlayActive, setButtonPlayActive] = useState(chrome.storage.local.get(["playActive"]).playActive);
 
   function recordHandler() {
     if (buttonPlayActive) setButtonPlayActive(false);
@@ -68,11 +68,17 @@ const Popup = () => {
     });
   }
 
-  function playHandler() {
+  async function playHandler() {
     if (buttonRecordActive) setButtonRecordActive(false);
-    let prev = buttonPlayActive;
-    chrome.storage.session.get({ playActive: buttonPlayActive });
-    setButtonPlayActive((prev = !prev));
+    let prev = await chrome.storage.local.get(["playActive"]).then((result) => {
+      console.log("Value currently is " + result.playActive);
+      return result.playActive;
+    });
+
+    await chrome.storage.local.set({ playActive: !prev }).then(() => {
+      console.log("Value is set to " + !prev);
+      setButtonPlayActive(!prev);
+    });
     sendMessage({
       action: 'startPlaying',
       value: 'I want to play events now!',
