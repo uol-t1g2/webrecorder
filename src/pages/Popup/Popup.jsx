@@ -10,7 +10,7 @@ function sendMessage(message) {
     chrome.tabs.sendMessage(tabs[0].id, message);
   });
 }
-
+let playState = chrome.storage.local.get(["playActive"]).playActive;
 const Popup = () => {
   // Button logic
   const playButton = (
@@ -56,7 +56,7 @@ const Popup = () => {
 
 
   const [buttonRecordActive, setButtonRecordActive] = useState(false);
-  const [buttonPlayActive, setButtonPlayActive] = useState(chrome.storage.local.get(["playActive"]).playActive);
+  const [buttonPlayActive, setButtonPlayActive] = useState(playState);
 
   function recordHandler() {
     if (buttonPlayActive) setButtonPlayActive(false);
