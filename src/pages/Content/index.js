@@ -12,10 +12,6 @@ chrome.runtime.onMessage.addListener(function (msgObj) {
       break;
     case 'startPlaying':
       console.log('Should start playing recording...');
-      /* playRecording is only called here for demonstration. 
-      It should be removed when required actions are implemented.
-      Example: click on the play button on popup window to increment the playground.htm Button counter */
-      playRecording(["#counter-button"]);
       sendMessage({ action: 'test', value: 'Hi from content (player)!' });
       break;
     default:
