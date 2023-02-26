@@ -45,7 +45,6 @@ function playRecording(recordedEvents) {
         }
       }
       clearInterval(intervalId);
-      sendMessage({ action: "finishedPlaying", value: "finished playing $recordedEvents" });
     } else {
       console.debug('Page is not loaded yet');
     }
