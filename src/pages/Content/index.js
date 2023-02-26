@@ -1,5 +1,5 @@
 // Global recorded events array
-var recordedEvents = [];
+let recordedEvents = ["#counter-button", "#counter-button", "#counter-button"];
 
 // Our global event receiver from Popup
 chrome.runtime.onMessage.addListener(function (msgObj) {
@@ -11,8 +11,8 @@ chrome.runtime.onMessage.addListener(function (msgObj) {
       sendMessage({ action: 'test', value: 'Hi from content (recorder)!' });
       break;
     case 'startPlaying':
-      console.log('Should start playing recording...');
-      sendMessage({ action: 'test', value: 'Hi from content (player)!' });
+      console.log('Should start playing recording...', recordedEvents.length);
+      playRecording(recordedEvents);
       break;
     default:
       console.log('Unkown action of', msgObj.action);
@@ -31,7 +31,23 @@ function click(selector) {
 }
 // The function plays a recording when needed
 function playRecording(recordedEvents) {
-  recordedEvents.forEach(element => {
-    click(element);
-  });
+  let intervalId = setInterval(() => {
+    if (document.readyState === 'complete') {
+      for (const element of recordedEvents) {
+        const elem = document.querySelector(element) || null;
+        let status = false;
+        if (elem) {
+          elem.addEventListener('click', () => { status = true }, true); // the callback will be invoked only once
+          let clickInterval = setInterval(() => {
+            click(element);
+            if (status) clearInterval(clickInterval);
+          }, 400);
+        }
+      }
+      clearInterval(intervalId);
+      sendMessage({ action: "finishedPlaying", value: "finished playing $recordedEvents" });
+    } else {
+      console.debug('Page is not loaded yet');
+    }
+  }, 1000);
 }
