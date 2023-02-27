@@ -59,7 +59,7 @@ function attachGlobalEventListeners() {
       );
     }
     catch (err) {
-      // if an element selector could not be found
+      // in case an element selector could not be found
       console.debug("oops, we coldn't find a way to select this element");
     }
   });
