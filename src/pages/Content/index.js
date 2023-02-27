@@ -39,21 +39,27 @@ function attachGlobalEventListeners() {
   // capture all click events
   document.body.addEventListener('click', function (e) {
 
-    // find the best selector for click target (id/class/tag/attr)
-    const selector = finder(e.target);
+    try {
+      // find the best selector for click target (id/class/tag/attr)
+      const selector = finder(e.target);
 
-    // store selector in recordedEvents
-    recordedEvents.push({
-      type: 'click',
-      element: selector,
-      time: new Date().getTime()
-    });
+      // store selector in recordedEvents
+      recordedEvents.push({
+        type: 'click',
+        element: selector,
+        time: new Date().getTime()
+      });
 
-    // test wether the event was added
-    console.debug(
-      'array length:', recordedEvents.length,
-      '\nlast record:', recordedEvents[recordedEvents.length - 1]
-    );
+      // test wether the event was added
+      console.debug(
+        'array length:', recordedEvents.length,
+        '\nlast record:', recordedEvents[recordedEvents.length - 1]
+      );
+    }
+    catch (err) {
+      // in case an element selector could not be found
+      console.debug("oops, we coldn't find a way to select this element");
+    }
   });
 }
 
