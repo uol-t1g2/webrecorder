@@ -10,29 +10,24 @@ chrome.runtime.onMessage.addListener(function (msgObj) {
 
   switch (msgObj.action) {
     case 'startRecording':
-      console.log('Should start recording here');
-      sendMessage({ action: 'test', value: 'Hi from content (recorder)!' });
-      // attach global event listeners
+      console.debug('Should start recording here');
       attachGlobalEventListeners();
+      sendMessage({ action: 'startedRecording', value: 'Hi from content (recorder)!' });
+      // attach global event listeners
       break;
     case 'stopRecording':
-      console.log('Should stop recording here');
-      sendMessage({ action: 'test', value: 'Hi from content (recorder)!' });
+      console.debug('Should stop recording here');
+      sendMessage({ action: 'stoppedRecording', value: 'Hi from content (recorder)!' });
       break;
     case 'startPlaying':
-      console.log('Should start playing recording...');
       playRecording(recordedEvents);
       break;
     case 'stopPlaying':
-      console.log('Should stop playing recording...');
-      sendMessage({ action: 'test', value: 'Hi from content (player)!' });
-      break;
-    case 'stopPlaying':
-      console.log('Should stop playing recording...');
-      sendMessage({ action: 'test', value: 'Hi from content (player)!' });
+      console.debug('Should stop playing recording...');
+      sendMessage({ action: 'stoppedPlaying', value: 'Hi from content (player)!' });
       break;
     default:
-      console.log('Unkown action of', msgObj.action);
+      console.debug('Unkown action of', msgObj.action);
   }
 });
 
