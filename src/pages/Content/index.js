@@ -1,5 +1,5 @@
 // Global recorded events array
-let recordedEvents = ["#counter-button", "#counter-button", "#counter-button"];
+let recordedEvents = [];
 
 // Our global event receiver from Popup
 chrome.runtime.onMessage.addListener(function (msgObj) {
@@ -11,7 +11,7 @@ chrome.runtime.onMessage.addListener(function (msgObj) {
       sendMessage({ action: 'test', value: 'Hi from content (recorder)!' });
       break;
     case 'startPlaying':
-      console.log('Should start playing recording...', recordedEvents.length);
+      console.log('Should start playing recording...');
       playRecording(recordedEvents);
       break;
     default:
@@ -27,26 +27,51 @@ function sendMessage(message) {
 // The function receives a selector and triggers the click event on it.
 function click(selector) {
   const element = document.querySelector(selector) || null;
-  if (element) element.click();
-}
-// The function plays a recording when needed
-function playRecording(recordedEvents) {
-  let intervalId = setInterval(() => {
-    if (document.readyState === 'complete') {
-      for (const element of recordedEvents) {
-        const elem = document.querySelector(element) || null;
-        let status = false;
-        if (elem) {
-          elem.addEventListener('click', () => { status = true }, true); // the callback will be invoked only once
-          let clickInterval = setInterval(() => {
-            click(element);
-            if (status) clearInterval(clickInterval);
-          }, 400);
-        }
-      }
-      clearInterval(intervalId);
-    } else {
-      console.debug('Page is not loaded yet');
+  if (element) {
+    try {
+      element.click();
+      return true
+    } catch (e) {
+      throw e;
     }
-  }, 1000);
+  }
+  else return false;
+}
+
+// The function plays a recording when needed
+async function playRecording(recordedEvents) {
+  for (const element of recordedEvents) {
+    try {
+      const status = await tryClickUntilExists(element, 1000, 5);
+      if (!status) {
+        sendMessage({ action: "finishedPlaying", value: `failed on element ${element}` });
+        return;
+      }
+    } catch (e) {
+      sendMessage({ action: "finishedPlaying", value: `error occured ${e}` });
+    }
+  }
+  sendMessage({ action: "finishedPlaying", value: "finished playing" });
+}
+
+//Click function that expects selector, interval to retry, maximum retries as params
+function tryClickUntilExists(selector, interval = 400, maxRetries = 1) {
+  return new Promise((resolve, reject) => {
+    let retries = 1;
+    let status = false;
+    //try until click exists
+    let clickInterval = setInterval(() => {
+      try {
+        status = click(selector);
+      } catch (e) {
+        console.debug('click error: ', e);
+        reject(new Error("failed to click"));
+      }
+      if (status || (retries >= maxRetries)) {
+        clearInterval(clickInterval);
+        resolve(status);
+      }
+      retries++;
+    }, interval);
+  })
 }
