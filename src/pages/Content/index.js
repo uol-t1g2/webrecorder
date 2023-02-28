@@ -12,6 +12,8 @@ chrome.runtime.onMessage.addListener(function (msgObj) {
     case 'startRecording':
       console.log('Should start recording here');
       sendMessage({ action: 'test', value: 'Hi from content (recorder)!' });
+      // attach global event listeners
+      attachGlobalEventListeners();
       break;
     case 'startPlaying':
       console.log('Should start playing recording...');
