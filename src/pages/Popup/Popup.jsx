@@ -66,6 +66,18 @@ const Popup = () => {
       action: 'startRecording',
       value: 'I want to record events now!',
     });
+    if (newButtonState) {
+      sendMessage({
+        action: 'startRecording',
+        value: 'I want to record events now!',
+      });
+    }
+    else {
+      sendMessage({
+        action: 'stopRecording',
+        value: 'I want to stop recording events now!',
+      });
+    }
   }
 
   function playHandler() {
@@ -73,10 +85,18 @@ const Popup = () => {
     const newButtonState = !buttonPlayActive;
     setButtonPlayActive(newButtonState);
     chrome.storage.session.set({ playState: newButtonState });
-    sendMessage({
-      action: 'startPlaying',
-      value: 'I want to play events now!',
-    });
+    if (newButtonState) {
+      sendMessage({
+        action: 'startPlaying',
+        value: 'I want to play events now!',
+      });
+    }
+    else {
+      sendMessage({
+        action: 'stopPlaying',
+        value: 'I want to stop play events now!',
+      });
+    }
   }
 
   useEffect(() => {

@@ -10,8 +10,16 @@ chrome.runtime.onMessage.addListener(function (msgObj) {
       console.log('Should start recording here');
       sendMessage({ action: 'test', value: 'Hi from content (recorder)!' });
       break;
+    case 'stopRecording':
+      console.log('Should stop recording here');
+      sendMessage({ action: 'test', value: 'Hi from content (recorder)!' });
+      break;
     case 'startPlaying':
       console.log('Should start playing recording...');
+      sendMessage({ action: 'test', value: 'Hi from content (player)!' });
+      break;
+    case 'stopPlaying':
+      console.log('Should stop playing recording...');
       sendMessage({ action: 'test', value: 'Hi from content (player)!' });
       break;
     default:
