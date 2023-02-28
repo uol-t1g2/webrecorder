@@ -26,13 +26,10 @@ function sendMessage(message) {
 // Create a click function for the content page task
 // The function receives a selector and triggers the click event on it.
 function click(selector) {
-  const element = document.querySelector(selector) || null;
-  if (element) {
-    try {
-      element.click();
-    } catch (e) {
-      throw e;
-    }
+  try {
+    selector.click();
+  } catch (e) {
+    throw e;
   }
 }
 
@@ -59,12 +56,15 @@ function tryClickUntilExists(selector, interval = 400, maxRetries = 1) {
     let status = false;
     //try until click exists
     let clickInterval = setInterval(() => {
-      try {
-        click(selector);
-        status = true;
-      } catch (e) {
-        console.debug('click error: ', e);
-        reject(new Error("failed to click"));
+      const element = document.querySelector(selector) || null;
+      if (element) {
+        try {
+          click(element);
+          status = true;
+        } catch (e) {
+          console.debug('click error: ', e);
+          reject(new Error("failed to click"));
+        }
       }
       if (status || (retries >= maxRetries)) {
         clearInterval(clickInterval);
