@@ -30,12 +30,10 @@ function click(selector) {
   if (element) {
     try {
       element.click();
-      return true
     } catch (e) {
       throw e;
     }
   }
-  else return false;
 }
 
 // The function plays a recording when needed
@@ -62,7 +60,8 @@ function tryClickUntilExists(selector, interval = 400, maxRetries = 1) {
     //try until click exists
     let clickInterval = setInterval(() => {
       try {
-        status = click(selector);
+        click(selector);
+        status = true;
       } catch (e) {
         console.debug('click error: ', e);
         reject(new Error("failed to click"));
