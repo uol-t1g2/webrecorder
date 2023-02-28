@@ -65,3 +65,9 @@ function attachGlobalEventListeners() {
   });
 }
 
+// The function plays a recording when needed
+function playRecording(recordedEvents) {
+  recordedEvents.forEach(element => {
+    click(element);
+  });
+}

@@ -58,9 +58,10 @@ const Popup = () => {
   const [buttonPlayActive, setButtonPlayActive] = useState(false);
 
   function recordHandler() {
-    if (buttonPlayActive) setButtonPlayActive(false);
-    let prev = buttonRecordActive;
-    setButtonRecordActive((prev = !prev));
+    if (buttonPlayActive) playHandler();
+    const newButtonState = !buttonRecordActive;
+    setButtonRecordActive(newButtonState);
+    chrome.storage.session.set({ recordState: newButtonState });
     sendMessage({
       action: 'startRecording',
       value: 'I want to record events now!',
@@ -68,9 +69,10 @@ const Popup = () => {
   }
 
   function playHandler() {
-    if (buttonRecordActive) setButtonRecordActive(false);
-    let prev = buttonPlayActive;
-    setButtonPlayActive((prev = !prev));
+    if (buttonRecordActive) recordHandler();
+    const newButtonState = !buttonPlayActive;
+    setButtonPlayActive(newButtonState);
+    chrome.storage.session.set({ playState: newButtonState });
     sendMessage({
       action: 'startPlaying',
       value: 'I want to play events now!',
@@ -83,6 +85,17 @@ const Popup = () => {
       console.debug('Got a message from the page', msgObj);
       return true;
     });
+
+    // Maintain the Play and Record button states on popup GUI
+    chrome.storage.session.get(["recordState"], (result) => {
+      const recordButtonState = result.recordState;
+      if (recordButtonState != undefined) setButtonRecordActive(recordButtonState);
+    });
+    chrome.storage.session.get(["playState"], (result) => {
+      const playButtonState = result.playState;
+      if (playButtonState != undefined) setButtonPlayActive(playButtonState);
+    });
+
   }, []);
 
   return (
