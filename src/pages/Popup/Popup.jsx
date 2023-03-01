@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../../assets/img/logo_light.svg';
 import Greetings from '../../containers/Greetings/Greetings';
 import './Popup.css';
@@ -7,60 +7,115 @@ import '../../assets/fontawesome/css/solid.min.css';
 
 function sendMessage(message) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, { message });
+    chrome.tabs.sendMessage(tabs[0].id, message);
   });
 }
 
 const Popup = () => {
+  // Button logic
+  const playButton = (
+    <button
+      className={`Button-style Button-play`}
+      onClick={playHandler}
+      id="playButton"
+      type="button"
+    >
+      <i className="fa-solid fa-circle-play"></i> Play
+    </button>
+  );
+  const recordButton = (
+    <button
+      className={`Button-style Button-record`}
+      onClick={recordHandler}
+      id="recordButton"
+      type="button"
+    >
+      <i className="fa-solid fa-circle-dot"></i> Record
+    </button>
+  );
+  const stopPlayButton = (
+    <button
+      className={`Button-style Button-stop`}
+      onClick={playHandler}
+      id="playButton"
+      type="button"
+    >
+      <i className="fa-solid fa-stop"></i> Playing
+    </button>
+  );
+  const stopRecordButton = (
+    <button
+      className={`Button-style Button-stop`}
+      onClick={recordHandler}
+      id="recordButton"
+      type="button"
+    >
+      <i className="fa-solid fa-circle-stop"></i> Stop
+    </button>
+  );
+
+  const [buttonRecordActive, setButtonRecordActive] = useState(false);
+  const [buttonPlayActive, setButtonPlayActive] = useState(false);
+
+  function recordHandler() {
+    if (buttonPlayActive) playHandler();
+    const newButtonState = !buttonRecordActive;
+    setButtonRecordActive(newButtonState);
+    chrome.storage.session.set({ recordState: newButtonState });
+    sendMessage({
+      action: 'startRecording',
+      value: 'I want to record events now!',
+    });
+    if (newButtonState) {
+      sendMessage({
+        action: 'startRecording',
+        value: 'I want to record events now!',
+      });
+    }
+    else {
+      sendMessage({
+        action: 'stopRecording',
+        value: 'I want to stop recording events now!',
+      });
+    }
+  }
+
+  function playHandler() {
+    if (buttonRecordActive) recordHandler();
+    const newButtonState = !buttonPlayActive;
+    setButtonPlayActive(newButtonState);
+    chrome.storage.session.set({ playState: newButtonState });
+    if (newButtonState) {
+      sendMessage({
+        action: 'startPlaying',
+        value: 'I want to play events now!',
+      });
+    }
+    else {
+      sendMessage({
+        action: 'stopPlaying',
+        value: 'I want to stop play events now!',
+      });
+    }
+  }
+
   useEffect(() => {
     // Listen for messages from the popup.
     chrome.runtime.onMessage.addListener((msgObj) => {
       console.debug('Got a message from the page', msgObj);
-      sendMessage({ data: 'Hi from popup!' });
       return true;
     });
 
-    // Button logic to switch on click events
-    document.getElementById('recordButton').addEventListener('click', recClick);
-    document.getElementById('playButton').addEventListener('click', playClick);
+    // Maintain the Play and Record button states on popup GUI
+    chrome.storage.session.get(["recordState"], (result) => {
+      const recordButtonState = result.recordState;
+      if (recordButtonState != undefined) setButtonRecordActive(recordButtonState);
+    });
+    chrome.storage.session.get(["playState"], (result) => {
+      const playButtonState = result.playState;
+      if (playButtonState != undefined) setButtonPlayActive(playButtonState);
+    });
 
-    function recClick() {
-      const elRec = document.getElementById('recordButton');
-      const elPlay = document.getElementById('playButton');
-      if (elRec.classList.contains('Button-record')) {
-        if (elPlay.classList.contains('Button-stop')) {
-          elPlay.classList.remove('Button-stop');
-          elPlay.classList.add('Button-play');
-          elPlay.innerHTML = "<i class='fa-solid fa-circle-play'></i> Play";
-        }
-        elRec.classList.remove('Button-record');
-        elRec.classList.add('Button-stop');
-        elRec.innerHTML = "<i class='fa-solid fa-circle-dot'></i> Stop";
-      } else {
-        elRec.classList.remove('Button-stop');
-        elRec.classList.add('Button-record');
-        elRec.innerHTML = "<i class='fa-solid fa-circle-dot'></i> Record";
-      }
-    }
-
-    function playClick() {
-      const elPlay = document.getElementById('playButton');
-      const elRec = document.getElementById('recordButton');
-      if (elPlay.classList.contains('Button-play')) {
-        if (elRec.classList.contains('Button-stop')) {
-          elRec.classList.remove('Button-stop');
-          elRec.classList.add('Button-record');
-          elRec.innerHTML = "<i class='fa-solid fa-circle-dot'></i> Record";
-        }
-        elPlay.classList.remove('Button-play');
-        elPlay.classList.add('Button-stop');
-        elPlay.innerHTML = "<i class='fa-solid fa-circle-stop'></i> Stop";
-      } else {
-        elPlay.classList.remove('Button-stop');
-        elPlay.classList.add('Button-play');
-        elPlay.innerHTML = "<i class='fa-solid fa-circle-play'></i> Play";
-      }
-    }
   }, []);
 
   return (
@@ -75,20 +130,8 @@ const Popup = () => {
         </form>
       </div>
       <div className="Button-area">
-        <button
-          className="Button-style Button-record"
-          id="recordButton"
-          type="button"
-        >
-          <i className="fa-solid fa-circle-dot"></i> Record
-        </button>
-        <button
-          className="Button-style Button-play"
-          id="playButton"
-          type="button"
-        >
-          <i className="fa-solid fa-circle-play"></i> Play
-        </button>
+        {buttonRecordActive ? stopRecordButton : recordButton}
+        {buttonPlayActive ? stopPlayButton : playButton}
       </div>
     </div>
   );
