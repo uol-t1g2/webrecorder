@@ -47,7 +47,7 @@ function detachGlobalEventListeners() {
   // remove the click listener
   document.body.removeEventListener('click', listener);
 }
-//Function to handle the event listener
+// Function to handle the global event listener
 function listener(e) {
   try {
     // find the best selector for click target (id/class/tag/attr)
