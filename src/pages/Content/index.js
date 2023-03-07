@@ -20,6 +20,8 @@ chrome.runtime.onMessage.addListener(function (msgObj) {
       break;
     case 'stopRecording':
       console.debug('Should stop recording here');
+      // Detach global event listeners
+      detachGlobalEventListeners();
       sendMessage({
         action: 'finishedRecording',
         value: JSON.stringify(recordedEvents, null, 2),
@@ -47,28 +49,35 @@ function sendMessage(message) {
 // A function that listens to click events and stores them in the recordedEvents array
 function attachGlobalEventListeners() {
   // Capture all click events
-  document.body.addEventListener('click', function (e) {
-    try {
-      // Find the best selector for click target (id/class/tag/attr)
-      const selector = finder(e.target);
-      // Store selector in recordedEvents
-      recordedEvents.push({
-        type: 'click',
-        element: selector,
-        time: new Date().getTime(),
-      });
-      // Test wether the event was added
-      console.debug(
-        'array length:',
-        recordedEvents.length,
-        '\nlast record:',
-        recordedEvents[recordedEvents.length - 1]
-      );
-    } catch (err) {
-      // In case an element selector could not be found
-      console.debug("oops, we coldn't find a way to select this element");
-    }
-  });
+  document.body.addEventListener('click', listener);
+}
+// A function that listens to click events and stores them in the recordedEvents array
+function detachGlobalEventListeners() {
+  // Remove the click listener
+  document.body.removeEventListener('click', listener);
+}
+// Function to handle the global event listener
+function listener(e) {
+  try {
+    // Find the best selector for click target (id/class/tag/attr)
+    const selector = finder(e.target);
+    // Store selector in recordedEvents
+    recordedEvents.push({
+      type: 'click',
+      element: selector,
+      time: new Date().getTime(),
+    });
+    // Test wether the event was added
+    console.debug(
+      'array length:',
+      recordedEvents.length,
+      '\nlast record:',
+      recordedEvents[recordedEvents.length - 1]
+    );
+  } catch (err) {
+    // In case an element selector could not be found
+    console.debug("oops, we coldn't find a way to select this element");
+  }
 }
 
 // The function plays a recording when needed
@@ -115,7 +124,7 @@ function tryClickUntilExists(selector, interval = 400, maxRetries = 1) {
           reject(new Error('failed to click'));
         }
       }
-      if (status || retries >= maxRetries) {
+      if (status || (retries >= maxRetries)) {
         clearInterval(clickInterval);
         resolve(status);
       }
