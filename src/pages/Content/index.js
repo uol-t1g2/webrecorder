@@ -20,7 +20,7 @@ chrome.runtime.onMessage.addListener(function (msgObj) {
       break;
     case 'stopRecording':
       console.debug('Should stop recording here');
-      // detach global event listeners
+      // Detach global event listeners
       detachGlobalEventListeners();
       sendMessage({
         action: 'finishedRecording',
@@ -58,29 +58,26 @@ function detachGlobalEventListeners() {
 }
 // Function to handle the global event listener
 function listener(e) {
-  // Capture all click events
-  document.body.addEventListener('click', function (e) {
-    try {
-      // Find the best selector for click target (id/class/tag/attr)
-      const selector = finder(e.target);
-      // Store selector in recordedEvents
-      recordedEvents.push({
-        type: 'click',
-        element: selector,
-        time: new Date().getTime(),
-      });
-      // Test wether the event was added
-      console.debug(
-        'array length:',
-        recordedEvents.length,
-        '\nlast record:',
-        recordedEvents[recordedEvents.length - 1]
-      );
-    } catch (err) {
-      // In case an element selector could not be found
-      console.debug("oops, we coldn't find a way to select this element");
-    }
-  });
+  try {
+    // Find the best selector for click target (id/class/tag/attr)
+    const selector = finder(e.target);
+    // Store selector in recordedEvents
+    recordedEvents.push({
+      type: 'click',
+      element: selector,
+      time: new Date().getTime(),
+    });
+    // Test wether the event was added
+    console.debug(
+      'array length:',
+      recordedEvents.length,
+      '\nlast record:',
+      recordedEvents[recordedEvents.length - 1]
+    );
+  } catch (err) {
+    // In case an element selector could not be found
+    console.debug("oops, we coldn't find a way to select this element");
+  }
 }
 
 // The function plays a recording when needed
