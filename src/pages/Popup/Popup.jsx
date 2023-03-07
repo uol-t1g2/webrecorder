@@ -12,6 +12,25 @@ function sendMessage(message) {
 }
 
 const Popup = () => {
+  // Our global event receiver from Content
+  chrome.runtime.onMessage.addListener(function (msgObj) {
+    console.debug('Got a message from Content,', msgObj);
+
+    switch (msgObj.action) {
+      case 'finishedRecording':
+        finishedRecording(msgObj.value);
+        break;
+      case 'finishedPlaying':
+        console.log('received finishedPlaying in Popup');
+        finishedPlaying(msgObj.value);
+        break;
+      default:
+        console.debug('Unkown action of', msgObj.action, ' received in Popup');
+    }
+  });
+
+  const [textContent, setTextContent] = useState('');
+
   // Button logic
   const playButton = (
     <button
@@ -57,22 +76,21 @@ const Popup = () => {
   const [buttonRecordActive, setButtonRecordActive] = useState(false);
   const [buttonPlayActive, setButtonPlayActive] = useState(false);
 
-  function recordHandler() {
+  function toggleRecordButton() {
     if (buttonPlayActive) playHandler();
     const newButtonState = !buttonRecordActive;
     setButtonRecordActive(newButtonState);
     chrome.storage.session.set({ recordState: newButtonState });
-    sendMessage({
-      action: 'startRecording',
-      value: 'I want to record events now!',
-    });
+    return newButtonState;
+  }
+  function recordHandler() {
+    const newButtonState = toggleRecordButton();
     if (newButtonState) {
       sendMessage({
         action: 'startRecording',
         value: 'I want to record events now!',
       });
-    }
-    else {
+    } else {
       sendMessage({
         action: 'stopRecording',
         value: 'I want to stop recording events now!',
@@ -90,8 +108,7 @@ const Popup = () => {
         action: 'startPlaying',
         value: 'I want to play events now!',
       });
-    }
-    else {
+    } else {
       sendMessage({
         action: 'stopPlaying',
         value: 'I want to stop play events now!',
@@ -99,23 +116,31 @@ const Popup = () => {
     }
   }
 
-  useEffect(() => {
-    // Listen for messages from the popup.
-    chrome.runtime.onMessage.addListener((msgObj) => {
-      console.debug('Got a message from the page', msgObj);
-      return true;
-    });
+  // function to handle when the play ended
+  function finishedPlaying(message) {
+    // Handle when play ended
+    if (buttonPlayActive) playHandler();
+  }
 
+  // function to handle when the record ended
+  function finishedRecording(message) {
+    // Handle when record ended
+    if (buttonRecordActive) toggleRecordButton();
+    // Parse the finishedPlaying message on textarea
+    setTextContent(message);
+  }
+
+  useEffect(() => {
     // Maintain the Play and Record button states on popup GUI
-    chrome.storage.session.get(["recordState"], (result) => {
+    chrome.storage.session.get(['recordState'], (result) => {
       const recordButtonState = result.recordState;
-      if (recordButtonState != undefined) setButtonRecordActive(recordButtonState);
+      if (recordButtonState != undefined)
+        setButtonRecordActive(recordButtonState);
     });
-    chrome.storage.session.get(["playState"], (result) => {
+    chrome.storage.session.get(['playState'], (result) => {
       const playButtonState = result.playState;
       if (playButtonState != undefined) setButtonPlayActive(playButtonState);
     });
-
   }, []);
 
   return (
@@ -125,9 +150,7 @@ const Popup = () => {
       </header>
       <div className="Content-area">
         <p>Hello UoL class.</p>
-        <form>
-          <textarea></textarea>
-        </form>
+        <textarea value={textContent} readOnly={true} />
       </div>
       <div className="Button-area">
         {buttonRecordActive ? stopRecordButton : recordButton}
