@@ -53,12 +53,12 @@ textarea {
 
 /* referenced to https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button for effect */
 .Button-style {
-  margin: 5px 10px;
-  width: 35%;
+  margin: 20px 10px;
+  width: 42%;
   border: none;
   line-height: 2.5;
   padding: 0 20px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: Ubuntu;
   text-align: center;
   color: #fff;
