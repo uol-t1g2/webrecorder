@@ -106,7 +106,7 @@ const Popup = () => {
     if (newButtonState) {
       sendMessage({
         action: 'startPlaying',
-        value: 'I want to play events now!',
+        value: document.getElementById("recordString").value,
       });
     } else {
       sendMessage({
@@ -150,7 +150,7 @@ const Popup = () => {
       </header>
       <div className="Content-area">
         <p>Hello UoL class.</p>
-        <textarea value={textContent} readOnly={true} />
+        <textarea id="recordString" value={textContent} readOnly={true} />
       </div>
       <div className="Button-area">
         {buttonRecordActive ? stopRecordButton : recordButton}
