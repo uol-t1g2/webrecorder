@@ -3,6 +3,8 @@ import { finder } from '@medv/finder';
 
 // Global recorded events array
 let recordedEvents = [];
+// Record play control variable
+let playIt = false;
 
 // Our global event receiver from Popup
 chrome.runtime.onMessage.addListener(function (msgObj) {
@@ -28,14 +30,11 @@ chrome.runtime.onMessage.addListener(function (msgObj) {
       });
       break;
     case 'startPlaying':
+      playIt = true;
       playRecording(recordedEvents);
       break;
     case 'stopPlaying':
-      console.debug('Should stop playing recording...');
-      sendMessage({
-        action: 'stoppedPlaying',
-        value: 'Hi from content (player)!',
-      });
+      playIt = false;
       break;
     default:
       console.debug('Unkown action of', msgObj.action);
@@ -67,7 +66,7 @@ function listener(e) {
       element: selector,
       time: new Date().getTime(),
     });
-    // Test wether the event was added
+    // Test whether the event was added
     console.debug(
       'array length:',
       recordedEvents.length,
@@ -83,7 +82,7 @@ function listener(e) {
 // The function plays a recording when needed
 async function playRecording(recordedEvents) {
   for (const event of recordedEvents) {
-    if (event.type == 'click') {
+    if (event.type == 'click' && playIt) {
       try {
         console.log(
           event.element,
@@ -102,6 +101,13 @@ async function playRecording(recordedEvents) {
       } catch (e) {
         sendMessage({ action: 'finishedPlaying', value: `error occured ${e}` });
       }
+    }
+    else {
+      sendMessage({
+        action: 'stoppedPlaying',
+        value: 'Stopped the play',
+      });
+      return;
     }
   }
   sendMessage({ action: 'finishedPlaying', value: 'finished playing' });
