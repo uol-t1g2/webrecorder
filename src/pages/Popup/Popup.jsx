@@ -29,6 +29,7 @@ const Popup = () => {
     }
   });
 
+  // Content to display on the textArea
   const [textContent, setTextContent] = useState('');
 
   // Button logic
@@ -106,7 +107,7 @@ const Popup = () => {
     if (newButtonState) {
       sendMessage({
         action: 'startPlaying',
-        value: document.getElementById("recordString").value,
+        value: textContent,
       });
     } else {
       sendMessage({
