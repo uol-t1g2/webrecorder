@@ -30,7 +30,7 @@ chrome.runtime.onMessage.addListener(function (msgObj) {
     case 'startPlaying':
       // Play the records from the Popup
       const eventsToPlay = JSON.parse(msgObj.value);
-      playRecording(recordedEvents);
+      playRecording(eventsToPlay);
       break;
     case 'stopPlaying':
       console.debug('Should stop playing recording...');
