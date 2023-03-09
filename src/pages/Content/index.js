@@ -30,11 +30,11 @@ chrome.runtime.onMessage.addListener(function (msgObj) {
       });
       break;
     case 'startPlaying':
-      playIt = true;
+      currentlyPlaying = true;
       playRecording(recordedEvents);
       break;
     case 'stopPlaying':
-      playIt = false;
+      currentlyPlaying = false;
       break;
     default:
       console.debug('Unkown action of', msgObj.action);
@@ -82,7 +82,7 @@ function listener(e) {
 // The function plays a recording when needed
 async function playRecording(recordedEvents) {
   for (const event of recordedEvents) {
-    if (event.type == 'click' && playIt) {
+    if (event.type == 'click' && currentlyPlaying) {
       try {
         console.log(
           event.element,
@@ -110,6 +110,7 @@ async function playRecording(recordedEvents) {
       return;
     }
   }
+  currentlyPlaying = false;
   sendMessage({ action: 'finishedPlaying', value: 'finished playing' });
 }
 
