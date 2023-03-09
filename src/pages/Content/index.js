@@ -4,7 +4,7 @@ import { finder } from '@medv/finder';
 // Global recorded events array
 let recordedEvents = [];
 // Record play control variable
-let playIt = false;
+let currentlyPlaying = false;
 
 // Our global event receiver from Popup
 chrome.runtime.onMessage.addListener(function (msgObj) {
