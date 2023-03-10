@@ -77,6 +77,7 @@ textarea {
 
 .Button-play:hover {
   background-image: linear-gradient(135deg, rgb(61, 128, 236) 40%, rgb(88, 240, 204));
+  cursor: pointer;
 }
 
 .Button-stop {
@@ -86,6 +87,7 @@ textarea {
 
 .Button-stop:hover {
   background-image: radial-gradient(rgb(250, 0, 0), rgb(142, 0, 0));
+  cursor: pointer;
 }
 
 .Button-record {
@@ -95,4 +97,5 @@ textarea {
 
 .Button-record:hover {
   background-image: linear-gradient(135deg, rgb(229, 59, 229) 30%, rgb(51, 241, 225));
+  cursor: pointer;
 }
