@@ -80,8 +80,18 @@ function listener(e) {
   }
 }
 
+// The function waits between play and clicks
+async function wait(delay) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, delay);
+  });
+}
+
 // The function plays a recording when needed
 async function playRecording(recordedEvents) {
+  await wait(10000); // Wait for 3 seconds
   for (const event of recordedEvents) {
     if (event.type == 'click') {
       try {
@@ -124,7 +134,7 @@ function tryClickUntilExists(selector, interval = 400, maxRetries = 1) {
           reject(new Error('failed to click'));
         }
       }
-      if (status || (retries >= maxRetries)) {
+      if (status || retries >= maxRetries) {
         clearInterval(clickInterval);
         resolve(status);
       }
