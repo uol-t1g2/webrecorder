@@ -15,6 +15,7 @@ function sendMessage(message) {
 
 // popup page logic
 const Popup = () => {
+
   // Our global event receiver from Content
   chrome.runtime.onMessage.addListener(function (msgObj) {
     console.debug('Got a message from Content,', msgObj);
