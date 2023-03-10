@@ -149,7 +149,7 @@ const Popup = () => {
         <img src={logo} className="App-logo" alt="logo" />
       </header>
       <div className="Content-area">
-        <p>Hello UoL class.</p>
+        <p>press "Record" to start automating</p>
         <textarea value={textContent} readOnly={true} />
       </div>
       <div className="Button-area">
