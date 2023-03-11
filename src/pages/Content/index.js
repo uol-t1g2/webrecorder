@@ -67,7 +67,7 @@ function listener(e) {
     recordedEvents.push({
       type: 'click',
       element: selector,
-      time: `${datetime}`,
+      time: datetime,
     });
     // Test wether the event was added
     console.debug(
