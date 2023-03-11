@@ -61,11 +61,13 @@ function listener(e) {
   try {
     // Find the best selector for click target (id/class/tag/attr)
     const selector = finder(e.target);
+    const timestamp = new Date();
+    const datetime = timestamp.toLocaleString();
     // Store selector in recordedEvents
     recordedEvents.push({
       type: 'click',
       element: selector,
-      time: new Date().getTime(),
+      time: `${datetime}`,
     });
     // Test wether the event was added
     console.debug(
@@ -76,7 +78,7 @@ function listener(e) {
     );
   } catch (err) {
     // In case an element selector could not be found
-    console.debug("oops, we coldn't find a way to select this element");
+    console.debug("oops, we coldn't find a way to select this element ", err);
   }
 }
 
