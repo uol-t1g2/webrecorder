@@ -39,7 +39,7 @@ const Popup = () => {
       id="playButton"
       type="button"
     >
-      <i className="fa-solid fa-circle-play"></i> Play
+      <i className="fa-solid fa-play"></i> Play
     </button>
   );
   const recordButton = (
@@ -149,7 +149,7 @@ const Popup = () => {
         <img src={logo} className="App-logo" alt="logo" />
       </header>
       <div className="Content-area">
-        <p>press "Record" to start automating</p>
+        <p>press <span class="highlighted">Record</span> to start automating</p>
         <textarea value={textContent} readOnly={true} />
       </div>
       <div className="Button-area">
