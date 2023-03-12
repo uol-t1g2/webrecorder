@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "My extension",
-  "description": "Some interesting description",
+  "name": "Web Automator",
+  "description": "Web automation tool",
   "permissions": [
     "storage"
   ],
