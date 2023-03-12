@@ -93,7 +93,7 @@ function listener(e) {
       recordedEvents[recordedEvents.length - 1]
     );
   } catch (err) {
-    //Iin case an element selector could not be found - notify debug console
+    //In case an element selector could not be found - notify debug console
     console.debug("oops, we coldn't find a way to select this element");
   }
 }
