@@ -1,13 +1,18 @@
+<!DOCTYPE html>
 <html>
 
 <head>
     <title>Button Counter</title>
+    
 </head>
 
 <body>
     <h1>Button Counter</h1>
     <button id="counter-button">Click me!</button>
     <p id="counter-display">0</p>
+    
+    <div id="root"></div>
+    <script src="../dist/bundle.js"></script>
 
     <script>
         let counter = 0;
@@ -18,6 +23,8 @@
             counter++;
             display.innerHTML = counter;
         });
+
+        
     </script>
 </body>
 
