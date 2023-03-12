@@ -1,3 +1,4 @@
+/* app container styling */
 .App {
   position: absolute;
   top: 0px;
@@ -10,6 +11,7 @@
   background-color: #fafafa;
 }
 
+/* logo image styling */
 .App-logo {
   position: fixed;
   top: 15px;
@@ -17,6 +19,7 @@
   pointer-events: none;
 }
 
+/* logo image container styling */
 .App-header {
   height: 20%;
   display: flex;
@@ -27,10 +30,7 @@
   color: rgb(8, 7, 8);
 }
 
-.App-link {
-  color: #61dafb;
-}
-
+/* container of instructions paragraph and textbox */
 .Content-area {
   height: 60%;
   display: flex;
@@ -39,6 +39,7 @@
   padding: 5vmin;
 }
 
+/* textarea styling */
 textarea {
   height: 40vmin;
   width: 100%;
@@ -51,6 +52,7 @@ textarea {
   resize: none;
 }
 
+/* general button styling - all buttons*/
 /* referenced to https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button for effect */
 .Button-style {
   margin: 20px 10px;
@@ -67,40 +69,80 @@ textarea {
   border-radius: 20px;
 }
 
+/* active buttons styling (during the mouse press) */
 .Button-style:active {
-  box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6), inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+  box-shadow:
+    inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+    inset 2px 2px 3px rgba(0, 0, 0, 0.6);
 }
 
+/* play button styling */
 .Button-play {
-  box-shadow: inset -2px -2px 5px rgba(80, 19, 65, 0.3), inset 2px 2px 5px rgba(235, 190, 217, 0.3);
-  background-image: linear-gradient(135deg, rgb(41, 198, 206) 10%, rgb(0, 174, 213) 30%, rgb(50, 118, 228));
+  box-shadow:
+    inset -2px -2px 5px rgba(80, 19, 65, 0.3),
+    inset 2px 2px 5px rgba(235, 190, 217, 0.3);
+  /* gradient button background */
+  background-image: linear-gradient(135deg,
+      rgb(41, 198, 206) 10%,
+      rgb(0, 174, 213) 30%,
+      rgb(50, 118, 228));
 }
 
+/* play button styling during mouse hover*/
 .Button-play:hover {
-  background-image: linear-gradient(135deg, rgb(36, 175, 182) 10%, rgb(1, 151, 184) 30%, rgb(43, 101, 193));
+  /* gradient button background */
+  background-image: linear-gradient(135deg,
+      rgb(36, 175, 182) 10%,
+      rgb(1, 151, 184) 30%,
+      rgb(43, 101, 193));
   cursor: pointer;
 }
 
+/* play-stop && record-stop button styling*/
 .Button-stop {
-  box-shadow: inset -2px -2px 5px rgba(80, 19, 65, 0.3), inset 2px 2px 5px rgba(235, 190, 217, 0.3);
-  background-image: linear-gradient(135deg, rgb(252, 74, 67) 10%, rgb(240, 9, 0) 30%, rgb(184, 15, 9));
+  box-shadow:
+    inset -2px -2px 5px rgba(80, 19, 65, 0.3),
+    inset 2px 2px 5px rgba(235, 190, 217, 0.3);
+  /* gradient button background */
+  background-image: linear-gradient(135deg,
+      rgb(252, 74, 67) 10%,
+      rgb(240, 9, 0) 30%,
+      rgb(184, 15, 9));
 }
 
+/* play-stop && record-stop button styling during mouse hover*/
 .Button-stop:hover {
-  background-image: linear-gradient(135deg, rgb(230, 51, 45) 10%, rgb(190, 7, 1) 30%, rgb(153, 13, 8));
+  /* gradient button background */
+  background-image: linear-gradient(135deg,
+      rgb(230, 51, 45) 10%,
+      rgb(190, 7, 1) 30%,
+      rgb(153, 13, 8));
   cursor: pointer;
 }
 
+/* record button styling */
 .Button-record {
-  box-shadow: inset -2px -2px 5px rgba(80, 19, 65, 0.3), inset 2px 2px 5px rgba(235, 190, 217, 0.3);
-  background-image: linear-gradient(135deg, rgb(254, 165, 57) 10%, rgb(245, 126, 49) 30%, rgb(223, 108, 32));
+  box-shadow:
+    inset -2px -2px 5px rgba(80, 19, 65, 0.3),
+    inset 2px 2px 5px rgba(235, 190, 217, 0.3);
+  /* gradient button background */
+  background-image: linear-gradient(135deg,
+      rgb(254, 165, 57) 10%,
+      rgb(245, 126, 49) 30%,
+      rgb(223, 108, 32));
 }
 
+/* record button styling during mouse hover*/
 .Button-record:hover {
-  background-image: linear-gradient(135deg, rgb(222, 144, 48) 10%, rgb(212, 108, 39) 30%, rgb(199, 96, 26));
+  /* gradient button background */
+  background-image: linear-gradient(135deg,
+      rgb(222, 144, 48) 10%,
+      rgb(212, 108, 39) 30%,
+      rgb(199, 96, 26));
   cursor: pointer;
 }
 
+/* styling of highligter span element within the instructions paragraph*/
 .highlighted {
   color: rgb(212, 108, 39);
 }
