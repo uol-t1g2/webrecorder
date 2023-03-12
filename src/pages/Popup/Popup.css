@@ -1,3 +1,4 @@
+/* app container styling */
 .App {
   position: absolute;
   top: 0px;
@@ -10,13 +11,15 @@
   background-color: #fafafa;
 }
 
+/* logo image styling */
 .App-logo {
   position: fixed;
   top: 15px;
-  height: 20vmin;
+  width: calc(150px + 20vmin);
   pointer-events: none;
 }
 
+/* logo image container styling */
 .App-header {
   height: 20%;
   display: flex;
@@ -27,10 +30,7 @@
   color: rgb(8, 7, 8);
 }
 
-.App-link {
-  color: #61dafb;
-}
-
+/* container of instructions paragraph and textbox */
 .Content-area {
   height: 60%;
   display: flex;
@@ -39,6 +39,7 @@
   padding: 5vmin;
 }
 
+/* textarea styling */
 textarea {
   height: 40vmin;
   width: 100%;
@@ -51,51 +52,97 @@ textarea {
   resize: none;
 }
 
+/* general button styling - all buttons*/
 /* referenced to https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button for effect */
 .Button-style {
-  margin: 5px 10px;
-  width: 35%;
+  margin: 20px 10px;
+  margin-top: 10px;
+  width: 40%;
   border: none;
   line-height: 2.5;
   padding: 0 20px;
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-family: Ubuntu;
   text-align: center;
   color: #fff;
-  text-shadow: 1px 1px 1px #000;
-  border-radius: 10px;
+  text-shadow: 1px 1px 1px #312f2f;
+  border-radius: 20px;
 }
 
+/* active buttons styling (during the mouse press) */
 .Button-style:active {
-  box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6), inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+  box-shadow:
+    inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+    inset 2px 2px 3px rgba(0, 0, 0, 0.6);
 }
 
+/* play button styling */
 .Button-play {
-  box-shadow: inset -2px -2px 5px rgba(80, 19, 65, 0.3), inset 2px 2px 5px rgba(235, 190, 217, 0.3);
-  background-image: linear-gradient(135deg, rgb(64, 133, 243) 40%, rgb(79, 252, 212));
+  box-shadow:
+    inset -2px -2px 5px rgba(80, 19, 65, 0.3),
+    inset 2px 2px 5px rgba(235, 190, 217, 0.3);
+  /* gradient button background */
+  background-image: linear-gradient(135deg,
+      rgb(41, 198, 206) 10%,
+      rgb(0, 174, 213) 30%,
+      rgb(50, 118, 228));
 }
 
+/* play button styling during mouse hover*/
 .Button-play:hover {
-  background-image: linear-gradient(135deg, rgb(61, 128, 236) 40%, rgb(88, 240, 204));
+  /* gradient button background */
+  background-image: linear-gradient(135deg,
+      rgb(36, 175, 182) 10%,
+      rgb(1, 151, 184) 30%,
+      rgb(43, 101, 193));
   cursor: pointer;
 }
 
+/* play-stop && record-stop button styling*/
 .Button-stop {
-  box-shadow: inset 2px 2px 3px rgba(100, 0, 0, 0.8), inset -2px -2px 3px rgba(100, 0, 0, 0.8);
-  background-image: radial-gradient(rgb(240, 9, 0), rgb(110, 0, 0));
+  box-shadow:
+    inset -2px -2px 5px rgba(80, 19, 65, 0.3),
+    inset 2px 2px 5px rgba(235, 190, 217, 0.3);
+  /* gradient button background */
+  background-image: linear-gradient(135deg,
+      rgb(252, 74, 67) 10%,
+      rgb(240, 9, 0) 30%,
+      rgb(184, 15, 9));
 }
 
+/* play-stop && record-stop button styling during mouse hover*/
 .Button-stop:hover {
-  background-image: radial-gradient(rgb(250, 0, 0), rgb(142, 0, 0));
+  /* gradient button background */
+  background-image: linear-gradient(135deg,
+      rgb(230, 51, 45) 10%,
+      rgb(190, 7, 1) 30%,
+      rgb(153, 13, 8));
   cursor: pointer;
 }
 
+/* record button styling */
 .Button-record {
-  box-shadow: inset -2px -2px 5px rgba(80, 19, 65, 0.3), inset 2px 2px 5px rgba(235, 190, 217, 0.3);
-  background-image: linear-gradient(135deg, rgb(220, 87, 230) 40%, rgb(77, 252, 237));
+  box-shadow:
+    inset -2px -2px 5px rgba(80, 19, 65, 0.3),
+    inset 2px 2px 5px rgba(235, 190, 217, 0.3);
+  /* gradient button background */
+  background-image: linear-gradient(135deg,
+      rgb(254, 165, 57) 10%,
+      rgb(245, 126, 49) 30%,
+      rgb(223, 108, 32));
 }
 
+/* record button styling during mouse hover*/
 .Button-record:hover {
-  background-image: linear-gradient(135deg, rgb(229, 59, 229) 30%, rgb(51, 241, 225));
+  /* gradient button background */
+  background-image: linear-gradient(135deg,
+      rgb(222, 144, 48) 10%,
+      rgb(212, 108, 39) 30%,
+      rgb(199, 96, 26));
   cursor: pointer;
+}
+
+/* styling of highligter span element within the instructions paragraph*/
+.highlighted {
+  color: rgb(212, 108, 39);
 }
