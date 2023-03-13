@@ -40,7 +40,7 @@ const Popup = () => {
     }
   });
 
-  // set text content
+  // Content to display on the textArea
   const [textContent, setTextContent] = useState('');
 
   // create play button
@@ -144,7 +144,7 @@ const Popup = () => {
       // if new state is "play"
       sendMessage({
         action: 'startPlaying',
-        value: 'I want to play events now!',
+        value: textContent,
       });
     } else {
       // if new state is "stop-play"
@@ -194,7 +194,7 @@ const Popup = () => {
       </header>
       <div className="Content-area">
         <p>press <span class="highlighted">Record</span> to start automating</p>
-        <textarea value={textContent} readOnly={true} />
+        <textarea id="recordString" value={textContent} readOnly={true} />
       </div>
       <div className="Button-area">
         {buttonRecordActive ? stopRecordButton : recordButton}
