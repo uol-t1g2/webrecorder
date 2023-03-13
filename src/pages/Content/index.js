@@ -36,7 +36,9 @@ chrome.runtime.onMessage.addListener(function (msgObj) {
       break;
     // if playing has started
     case 'startPlaying':
-      playRecording(recordedEvents);
+      // Play the records from the Popup
+      const eventsToPlay = JSON.parse(msgObj.value);
+      playRecording(eventsToPlay);
       break;
     // if playing was stopped
     case 'stopPlaying':
@@ -126,7 +128,7 @@ async function playRecording(recordedEvents) {
     }
   }
   // if no more events are left within recordedEvents - finished playing
-  sendMessage({ action: 'finishedPlaying', value: 'finished playing' });
+  sendMessage({ action: 'finishedPlaying', value: 'Play completed' });
 }
 
 // a click function that expects selector, interval to retry, maximum retries as params
